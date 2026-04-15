@@ -4,6 +4,7 @@ import { ref } from 'vue';
 
 const waitingForAction = ref(true);
 const actions = ref([]);
+// const generatedImage = ref('');
 
 async function performInteraction(content) {
   const data = await $fetch('/api/interactions', {
@@ -28,6 +29,17 @@ async function addAction(action) {
 
   await performInteraction(action);
 }
+
+// async function createImage() {
+//   const data = await $fetch('/api/images', {
+//     method: 'POST',
+//     body: {
+//       content: actions.value[0].parts[0].text,
+//     },
+//   });
+
+//   generatedImage.value = data.image[0].replace('public/', '');
+// }
 </script>
 
 <template>
@@ -42,14 +54,21 @@ async function addAction(action) {
         <p v-for="answer in actions" class="scenario-card">{{ answer }}</p>
       </section>
 
-      <button
-        v-if="actions.length === 0"
-        @click="startAdventure"
-        class="start-btn"
-      >
-        Start Adventure
-      </button>
+      <div v-if="actions.length === 0" class="start-btn-container">
+        <ActionButton @click="startAdventure">Start Adventure</ActionButton>
+      </div>
       <ActionPrompt v-else @action="addAction" :disabled="!waitingForAction" />
+
+      <!-- <div v-if="actions.length > 0" class="image-container">
+        <ActionButton @click="createImage">Generate Image</ActionButton>
+        <img
+          height="320"
+          width="320"
+          v-show="generatedImage"
+          :src="generatedImage"
+          alt=""
+        />
+      </div> -->
     </article>
   </main>
 </template>

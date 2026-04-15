@@ -154,3 +154,14 @@ body {
     opacity 0.15s ease,
     transform 0.1s ease;
 }
+
+.start-btn-container {
+  display: flex;
+  justify-content: center;
+}
+
+.image-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
