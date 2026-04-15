@@ -9,7 +9,7 @@ const ai = new GoogleGenAI({
 
 const SYSTEM_INSTRUCTION = `The user will be submitting decisions to fictional scenarios where they are superheroes.
 Given the response they give, you will generate complications or changes in the scenario so it can be interactive.
-The scenarios you generate should be based on what have already happened and what the user is providing. Keep the paragraphs short.
+The scenarios you generate should be based on what have already happened and what the user is providing. Keep the paragraphs short, around 500 characters.
 
 Example:
 You gave the scenario of a skycrapper on fire where multiple people is stuck on the highest level, and the user have the superpower to fly. 

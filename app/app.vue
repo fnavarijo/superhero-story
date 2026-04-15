@@ -13,14 +13,14 @@ function scrollToBottom() {
 
 function buildEntry(role, content) {
   // role: user | model
-  return { role, content };
+  return { role, parts: [{ text: content }] };
 }
 
 async function performInteraction(content) {
   const data = await $fetch('/api/interactions', {
     method: 'POST',
     body: {
-      interactionId: '1234',
+      // interactionId: '1234',
       content: content || null,
     },
   });
@@ -37,7 +37,7 @@ async function addAction(action) {
   waitingForAction.value = false;
   actions.value.push(buildEntry('user', action));
 
-  await performInteraction(action);
+  await performInteraction(actions.value);
 
   scrollToBottom();
 }
@@ -62,6 +62,12 @@ async function addAction(action) {
     </header>
 
     <article>
+      <section class="scenario-container">
+        <p v-for="action in actions" class="scenario-card">
+          {{ action.parts[0].text }}
+        </p>
+      </section>
+
       <section v-if="actions.length === 0" class="start-btn-container">
         <ActionButton @click="startAdventure">Start Adventure</ActionButton>
       </section>
