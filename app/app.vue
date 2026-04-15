@@ -3,24 +3,30 @@ import '@/assets/global.css';
 import { ref } from 'vue';
 
 const waitingForAction = ref(true);
-const actions = ref([
-  'You are the superhero Sharpnado. You can fly. You archienemy is attacking you with missiles. You see a passage in a mountain near you, what do you do?',
-]);
+const actions = ref([]);
 
-async function addAction(action) {
-  waitingForAction.value = false;
-  actions.value.push(`Your answer: ${action}`);
-
+async function performInteraction(content) {
   const data = await $fetch('/api/interactions', {
     method: 'POST',
     body: {
       interactionId: '1234',
-      content: action,
+      content: content || null,
     },
   });
 
   actions.value.push(data.content);
   waitingForAction.value = true;
+}
+
+async function startAdventure() {
+  await performInteraction();
+}
+
+async function addAction(action) {
+  waitingForAction.value = false;
+  actions.value.push(`Your answer: ${action}`);
+
+  await performInteraction(action);
 }
 </script>
 
@@ -36,7 +42,10 @@ async function addAction(action) {
         <p v-for="answer in actions" class="scenario-card">{{ answer }}</p>
       </section>
 
-      <ActionPrompt @action="addAction" :disabled="!waitingForAction" />
+      <button v-if="actions.length === 0" @click="startAdventure">
+        Start Adventure
+      </button>
+      <ActionPrompt v-else @action="addAction" :disabled="!waitingForAction" />
     </article>
   </main>
 </template>
