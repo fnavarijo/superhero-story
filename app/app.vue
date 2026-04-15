@@ -42,7 +42,11 @@ async function addAction(action) {
         <p v-for="answer in actions" class="scenario-card">{{ answer }}</p>
       </section>
 
-      <button v-if="actions.length === 0" @click="startAdventure">
+      <button
+        v-if="actions.length === 0"
+        @click="startAdventure"
+        class="start-btn"
+      >
         Start Adventure
       </button>
       <ActionPrompt v-else @action="addAction" :disabled="!waitingForAction" />
