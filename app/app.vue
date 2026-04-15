@@ -5,7 +5,7 @@ import { ref } from 'vue';
 const bottomRef = ref(null);
 const waitingForAction = ref(true);
 const actions = ref([]);
-// const generatedImage = ref('');
+const generatedImage = ref('');
 
 function scrollToBottom() {
   bottomRef.value?.scrollIntoView({ behavior: 'smooth' });
@@ -42,16 +42,16 @@ async function addAction(action) {
   scrollToBottom();
 }
 
-// async function createImage() {
-//   const data = await $fetch('/api/images', {
-//     method: 'POST',
-//     body: {
-//       content: actions.value[0].parts[0].text,
-//     },
-//   });
+async function createImage() {
+  const data = await $fetch('/api/images', {
+    method: 'POST',
+    body: {
+      content: actions.value[0].parts[0].text,
+    },
+  });
 
-//   generatedImage.value = data.image[0].replace('public/', '');
-// }
+  generatedImage.value = data.image[0].replace('public/', '');
+}
 </script>
 
 <template>
@@ -86,6 +86,16 @@ async function addAction(action) {
         <ActionPrompt @action="addAction" :disabled="!waitingForAction" />
         <div ref="bottomRef"></div>
       </section>
+      <div v-if="actions.length > 0" class="image-container">
+        <ActionButton @click="createImage">Generate Image</ActionButton>
+        <img
+          height="320"
+          width="320"
+          v-show="generatedImage"
+          :src="generatedImage"
+          alt=""
+        />
+      </div>
     </article>
   </main>
 </template>
