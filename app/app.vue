@@ -46,20 +46,48 @@ async function addAction(action) {
   <main class="app-shell">
     <header class="app-header">
       <span class="app-shadowmark">Your superhero story</span>
-      <h1 class="app-title">The Last Train at Verdant Station</h1>
+      <h1 class="app-title">A generative sequence</h1>
     </header>
 
     <article>
-      <section class="scenario-container">
-        <p v-for="answer in actions" class="scenario-card">{{ answer }}</p>
-      </section>
-      <StoryBubble />
-
-      <div v-if="actions.length === 0" class="start-btn-container">
+      <section v-if="actions.length === 0" class="start-btn-container">
         <ActionButton @click="startAdventure">Start Adventure</ActionButton>
-      </div>
+      </section>
+      <section v-else class="active-container">
+        <div class="conversation-container">
+          <StoryBubble v-for="answer in actions" :content="answer" />
+          <StoryBubble
+            content="You move with the practiced ease of someone who has done this before. The carriage door hisses open. He doesn't look up — but his shoulders shift, just slightly, the way a wolf's do when another animal enters its clearing. He knows."
+          />
+          <StoryBubble
+            content="You move with the practiced ease of someone who has done this before. The carriage door hisses open. He doesn't look up — but his shoulders shift, just slightly, the way a wolf's do when another animal enters its clearing. He knows."
+            actor="user"
+          />
+          <StoryBubble
+            content="You move with the practiced ease of someone who has done this before. The carriage door hisses open. He doesn't look up — but his shoulders shift, just slightly, the way a wolf's do when another animal enters its clearing. He knows."
+          />
+          <StoryBubble
+            content="You move with the practiced ease of someone who has done this before. The carriage door hisses open. He doesn't look up — but his shoulders shift, just slightly, the way a wolf's do when another animal enters its clearing. He knows."
+          />
+          <StoryBubble
+            content="You move with the practiced ease of someone who has done this before. The carriage door hisses open. He doesn't look up — but his shoulders shift, just slightly, the way a wolf's do when another animal enters its clearing. He knows."
+          />
+          <StoryBubble
+            content="You move with the practiced ease of someone who has done this before. The carriage door hisses open. He doesn't look up — but his shoulders shift, just slightly, the way a wolf's do when another animal enters its clearing. He knows."
+          />
+          <StoryBubble
+            content="You move with the practiced ease of someone who has done this before. The carriage door hisses open. He doesn't look up — but his shoulders shift, just slightly, the way a wolf's do when another animal enters its clearing. He knows."
+          />
+          <StoryBubble
+            content="You move with the practiced ease of someone who has done this before. The carriage door hisses open. He doesn't look up — but his shoulders shift, just slightly, the way a wolf's do when another animal enters its clearing. He knows."
+          />
+          <StoryBubble
+            content="You move with the practiced ease of someone who has done this before. The carriage door hisses open. He doesn't look up — but his shoulders shift, just slightly, the way a wolf's do when another animal enters its clearing. He knows."
+          />
+        </div>
 
-      <ActionPrompt v-else @action="addAction" :disabled="!waitingForAction" />
+        <ActionPrompt @action="addAction" :disabled="!waitingForAction" />
+      </section>
 
       <!-- <div v-if="actions.length > 0" class="image-container">
         <ActionButton @click="createImage">Generate Image</ActionButton>

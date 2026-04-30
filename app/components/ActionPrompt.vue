@@ -14,18 +14,54 @@ function submitAction() {
 </script>
 
 <template>
-  <section>
+  <section class="action-prompt">
     <form @submit.prevent="submitAction" class="action-form">
-      <label for="h-action" class="input-label">Your action</label>
-      <div class="action-row">
-        <input
-          id="h-action"
-          type="text"
-          v-model="action"
-          class="action-input"
-        />
-        <button :disabled="disabled" class="submit-btn">Do action</button>
-      </div>
+      <input
+        id="h-action"
+        type="text"
+        v-model="action"
+        class="action-input"
+        placeholder="What do you do?"
+      />
+      <button
+        :disabled="disabled"
+        class="submit-btn"
+        :class="{ enable: Boolean(action) }"
+      >
+        Act ↵
+      </button>
     </form>
   </section>
 </template>
+
+<style scoped>
+.action-prompt {
+  background-color: var(--c-black-2);
+  border: 1px solid var(--c-black-3);
+  padding: 0.875rem 1rem;
+}
+
+.action-form {
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+}
+
+.action-input {
+  background: transparent;
+  border: none;
+  flex: 1 1 0%;
+  color: var(--c-text-primary);
+}
+
+.submit-btn {
+  background: transparent;
+  border: none;
+  color: var(--c-text-secondary);
+}
+.submit-btn.enable {
+  background: transparent;
+  border: none;
+  color: var(--c-text-tertiary);
+}
+</style>
