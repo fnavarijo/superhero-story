@@ -44,19 +44,21 @@ async function addAction(action) {
 
 <template>
   <main class="app-shell">
-    <header>
-      <h1 class="app-title">Your superhero story</h1>
-      <p></p>
+    <header class="app-header">
+      <span class="app-shadowmark">Your superhero story</span>
+      <h1 class="app-title">The Last Train at Verdant Station</h1>
     </header>
 
     <article>
       <section class="scenario-container">
         <p v-for="answer in actions" class="scenario-card">{{ answer }}</p>
       </section>
+      <StoryBubble />
 
       <div v-if="actions.length === 0" class="start-btn-container">
         <ActionButton @click="startAdventure">Start Adventure</ActionButton>
       </div>
+
       <ActionPrompt v-else @action="addAction" :disabled="!waitingForAction" />
 
       <!-- <div v-if="actions.length > 0" class="image-container">
