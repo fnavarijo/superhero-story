@@ -2,9 +2,14 @@
 import '@/assets/global.css';
 import { ref } from 'vue';
 
+const bottomRef = ref(null);
 const waitingForAction = ref(true);
 const actions = ref([]);
 // const generatedImage = ref('');
+
+function scrollToBottom() {
+  bottomRef.value?.scrollIntoView({ behavior: 'smooth' });
+}
 
 function buildEntry(role, content) {
   // role: user | model
@@ -33,6 +38,8 @@ async function addAction(action) {
   actions.value.push(buildEntry('user', action));
 
   await performInteraction(action);
+
+  scrollToBottom();
 }
 
 // async function createImage() {
@@ -68,6 +75,7 @@ async function addAction(action) {
         </div>
 
         <ActionPrompt @action="addAction" :disabled="!waitingForAction" />
+        <div ref="bottomRef"></div>
       </section>
 
       <!-- <div v-if="actions.length > 0" class="image-container">
