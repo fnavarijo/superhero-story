@@ -9,20 +9,22 @@ const { actor, content } = defineProps({
     required: true,
   },
 });
+
+const isModelActor = actor === 'model';
 </script>
 
 <template>
   <div class="story-bubble">
     <header
       class="story-actor"
-      :class="[actor === 'model' ? 'actor-model' : 'actor-user']"
+      :class="[isModelActor ? 'actor-model' : 'actor-user']"
     >
-      Narrator
+      {{ isModelActor ? 'Narrator' : 'You' }}
     </header>
 
     <div
       class="story-detail"
-      :class="[actor === 'model' ? 'actor-model' : 'actor-user']"
+      :class="[isModelActor ? 'actor-model' : 'actor-user']"
     >
       {{ content }}
     </div>

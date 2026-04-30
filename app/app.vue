@@ -6,6 +6,11 @@ const waitingForAction = ref(true);
 const actions = ref([]);
 // const generatedImage = ref('');
 
+function buildEntry(role, content) {
+  // role: user | model
+  return { role, content };
+}
+
 async function performInteraction(content) {
   const data = await $fetch('/api/interactions', {
     method: 'POST',
@@ -15,7 +20,7 @@ async function performInteraction(content) {
     },
   });
 
-  actions.value.push(data.content);
+  actions.value.push(buildEntry('model', data.content));
   waitingForAction.value = true;
 }
 
@@ -25,7 +30,7 @@ async function startAdventure() {
 
 async function addAction(action) {
   waitingForAction.value = false;
-  actions.value.push(`Your answer: ${action}`);
+  actions.value.push(buildEntry('user', action));
 
   await performInteraction(action);
 }
@@ -55,34 +60,10 @@ async function addAction(action) {
       </section>
       <section v-else class="active-container">
         <div class="conversation-container">
-          <StoryBubble v-for="answer in actions" :content="answer" />
           <StoryBubble
-            content="You move with the practiced ease of someone who has done this before. The carriage door hisses open. He doesn't look up — but his shoulders shift, just slightly, the way a wolf's do when another animal enters its clearing. He knows."
-          />
-          <StoryBubble
-            content="You move with the practiced ease of someone who has done this before. The carriage door hisses open. He doesn't look up — but his shoulders shift, just slightly, the way a wolf's do when another animal enters its clearing. He knows."
-            actor="user"
-          />
-          <StoryBubble
-            content="You move with the practiced ease of someone who has done this before. The carriage door hisses open. He doesn't look up — but his shoulders shift, just slightly, the way a wolf's do when another animal enters its clearing. He knows."
-          />
-          <StoryBubble
-            content="You move with the practiced ease of someone who has done this before. The carriage door hisses open. He doesn't look up — but his shoulders shift, just slightly, the way a wolf's do when another animal enters its clearing. He knows."
-          />
-          <StoryBubble
-            content="You move with the practiced ease of someone who has done this before. The carriage door hisses open. He doesn't look up — but his shoulders shift, just slightly, the way a wolf's do when another animal enters its clearing. He knows."
-          />
-          <StoryBubble
-            content="You move with the practiced ease of someone who has done this before. The carriage door hisses open. He doesn't look up — but his shoulders shift, just slightly, the way a wolf's do when another animal enters its clearing. He knows."
-          />
-          <StoryBubble
-            content="You move with the practiced ease of someone who has done this before. The carriage door hisses open. He doesn't look up — but his shoulders shift, just slightly, the way a wolf's do when another animal enters its clearing. He knows."
-          />
-          <StoryBubble
-            content="You move with the practiced ease of someone who has done this before. The carriage door hisses open. He doesn't look up — but his shoulders shift, just slightly, the way a wolf's do when another animal enters its clearing. He knows."
-          />
-          <StoryBubble
-            content="You move with the practiced ease of someone who has done this before. The carriage door hisses open. He doesn't look up — but his shoulders shift, just slightly, the way a wolf's do when another animal enters its clearing. He knows."
+            v-for="action in actions"
+            :actor="action.role"
+            :content="action.content"
           />
         </div>
 
