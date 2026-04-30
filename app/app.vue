@@ -74,20 +74,12 @@ async function addAction(action) {
           />
         </div>
 
+        <!-- <StoryImage v-show="generatedImage" :src="generatedImage" />
+        <StoryImageGenerator @generate="createImage" /> -->
+
         <ActionPrompt @action="addAction" :disabled="!waitingForAction" />
         <div ref="bottomRef"></div>
       </section>
-
-      <!-- <div v-if="actions.length > 0" class="image-container">
-        <ActionButton @click="createImage">Generate Image</ActionButton>
-        <img
-          height="320"
-          width="320"
-          v-show="generatedImage"
-          :src="generatedImage"
-          alt=""
-        />
-      </div> -->
     </article>
   </main>
 </template>
