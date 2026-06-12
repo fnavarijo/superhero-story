@@ -26,3 +26,4 @@ This section will provide general information about the tools used and where to 
 
 - [Get Started with Google Gen AI](https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/start)
 - [@google/genai](https://googleapis.github.io/js-genai/release_docs/index.html)
+- [Available models](https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/google-models)
