@@ -1,13 +1,12 @@
 # Generative UI: A superhero story
 
-Here you will find the base code for the SuperHero story lab.
+This is the codebase for the Generative Text and Image App for the GDG Guatemala workshop.
 
 ## Setup
 
 Make sure to install dependencies:
 
 ```bash
-# npm
 npm install
 ```
 
@@ -16,8 +15,14 @@ npm install
 Start the development server on `http://localhost:3000`:
 
 ```bash
-# npm
 npm run dev
 ```
 
-The slides for this Lab can be found [here](https://github.com/fnavarijo)
+## Knowledge
+
+This section will provide general information about the tools used and where to find more information about them.
+
+### Libraries
+
+- [Get Started with Google Gen AI](https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/start)
+- [@google/genai](https://googleapis.github.io/js-genai/release_docs/index.html)
