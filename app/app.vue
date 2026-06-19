@@ -5,7 +5,7 @@ import { ref } from 'vue';
 const bottomRef = ref(null);
 const waitingForAction = ref(true);
 const actions = ref([]);
-// const generatedImage = ref('');
+const generatedImage = ref('');
 
 function scrollToBottom() {
   bottomRef.value?.scrollIntoView({ behavior: 'smooth' });
@@ -13,7 +13,8 @@ function scrollToBottom() {
 
 function buildEntry(role, content) {
   // role: user | model
-  return { role, content };
+  // return { role, content };
+  return { role, parts: [{ text: content }] };
 }
 
 async function performInteraction(content) {
@@ -37,21 +38,21 @@ async function addAction(action) {
   waitingForAction.value = false;
   actions.value.push(buildEntry('user', action));
 
-  await performInteraction(action);
+  await performInteraction(actions.value);
 
   scrollToBottom();
 }
 
-// async function createImage() {
-//   const data = await $fetch('/api/images', {
-//     method: 'POST',
-//     body: {
-//       content: actions.value[0].parts[0].text,
-//     },
-//   });
+async function createImage() {
+  const data = await $fetch('/api/images', {
+    method: 'POST',
+    body: {
+      content: actions.value[0].parts[0].text,
+    },
+  });
 
-//   generatedImage.value = data.image[0].replace('public/', '');
-// }
+  generatedImage.value = data.image[0].replace('public/', '');
+}
 </script>
 
 <template>
@@ -70,12 +71,12 @@ async function addAction(action) {
           <StoryBubble
             v-for="action in actions"
             :actor="action.role"
-            :content="action.content"
+            :content="action.parts[0].text"
           />
         </div>
 
-        <!-- <StoryImage v-show="generatedImage" :src="generatedImage" />
-        <StoryImageGenerator @generate="createImage" /> -->
+        <StoryImage v-show="generatedImage" :src="generatedImage" />
+        <StoryImageGenerator @generate="createImage" />
 
         <ActionPrompt @action="addAction" :disabled="!waitingForAction" />
         <div ref="bottomRef"></div>
